@@ -1,5 +1,18 @@
 import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+
+import CustomCarousel from "../components/CustomCarousel";
+import CustomCard from "../components/CustomCard";
+
+import CustomCarouselItem from "../models/customCarouselItem";
+
+const exampleItems: CustomCarouselItem[] = [
+  { imgSrc: "../assets/img/react.png", imgAlt: "", title: "Carousel title", description: "Lorem ipsum." },
+  { imgSrc: "../assets/img/react.png", imgAlt: "", title: "Carousel title", description: "Lorem ipsum." },
+  { imgSrc: "../assets/img/react.png", imgAlt: "", title: "Carousel title", description: "Lorem ipsum." },
+];
 
 const Home = () => {
   return (
@@ -8,16 +21,18 @@ const Home = () => {
         <title>Home</title>
         <meta name="description" content="Home page." />
       </Helmet>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae tellus commodo, eleifend odio quis,
-        sollicitudin ante. Integer condimentum convallis congue. Sed eu leo at odio vulputate efficitur consequat sit
-        amet mauris. Phasellus suscipit mauris rhoncus neque porttitor, nec dignissim est faucibus. Duis elit eros,
-        blandit quis gravida sed, efficitur tristique dolor. Proin quis sagittis risus, sit amet fermentum erat. Mauris
-        facilisis lectus sit amet turpis lobortis, non ultrices magna commodo. Nunc hendrerit vulputate turpis, in
-        semper elit ultrices vel. Etiam venenatis fermentum lectus, in tristique augue ornare eu. Fusce eleifend luctus
-        lacus sit amet molestie. Nulla consectetur eget nisl sit amet fringilla. Nunc a imperdiet ex. Nunc nec laoreet
-        massa. Vivamus eget tortor ut arcu pretium cursus. Phasellus condimentum varius mauris vitae auctor.
-      </p>
+      <CustomCarousel items={exampleItems} />
+      <Container className="my-5">
+        <Row xs={1} md={2} lg={3} className="g-4">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <Col key={idx}>
+              <Link to={"/"} className="text-decoration-none text-black">
+                <CustomCard imgSrc="../assets/img/react.png" imgAlt="" title="Card title" description="Lorem ipsum." />
+              </Link>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };
