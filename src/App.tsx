@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
+
+import { useAppDispatch } from "./hooks/useAppDispatch";
+import { hideAllModals } from "./store/slices/modalSlice";
 
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
@@ -10,6 +13,14 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    hideOpenModals();
+  }, []);
+
+  const hideOpenModals = () => dispatch(hideAllModals());
+
   return (
     <>
       <Helmet titleTemplate="%s | FyStore" defaultTitle="FyStore" />
