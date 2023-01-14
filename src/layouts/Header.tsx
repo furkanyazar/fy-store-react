@@ -45,20 +45,20 @@ const Header = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Link to={"/"} className="text-decoration-none">
+        <Link to={"/"}>
           <Navbar.Brand>FY Store</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to={"/"} className="text-decoration-none">
-              <Nav.Link>Home</Nav.Link>
+            <Link to={"/"}>
+              <Nav.Link as={"div"}>Home</Nav.Link>
             </Link>
             <NavDropdown title="Categories" id="basic-nav-dropdown">
               {categoriesLoaded ? (
                 categories.map((category) => (
-                  <Link to={"/"} className="text-decoration-none">
-                    <NavDropdown.Item key={category.id}>{category.name}</NavDropdown.Item>
+                  <Link key={category.id} to={"/"}>
+                    <NavDropdown.Item as={"div"}>{category.name}</NavDropdown.Item>
                   </Link>
                 ))
               ) : (
