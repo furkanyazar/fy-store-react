@@ -13,7 +13,7 @@ const LoginModal = () => {
   const handleClose = () => dispatch(setShowLoginModal(false));
 
   return (
-    <Modal show={showLoginModal} onHide={handleClose}>
+    <Modal show={showLoginModal} onHide={handleClose} scrollable>
       <Modal.Header closeButton>
         <Modal.Title>Login</Modal.Title>
       </Modal.Header>

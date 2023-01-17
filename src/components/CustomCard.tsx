@@ -1,13 +1,17 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const CustomCard = ({ imgSrc, imgAlt, title, description }: Props) => {
+const CustomCard = ({ title, description, imgSrc }: Props) => {
   return (
     <Card>
-      <Card.Img variant="top" src={imgSrc} alt={imgAlt} />
+      <Card.Img variant="top" src={imgSrc} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>{description}</Card.Text>
+        <Card.Text>
+          {description.length > 70
+            ? description.substring(0, description.substring(0, 70).lastIndexOf(" ")) + "..."
+            : description}
+        </Card.Text>
       </Card.Body>
     </Card>
   );
@@ -15,8 +19,7 @@ const CustomCard = ({ imgSrc, imgAlt, title, description }: Props) => {
 export default CustomCard;
 
 interface Props {
-  imgSrc: string;
-  imgAlt: string;
   title: string;
   description: string;
+  imgSrc: string;
 }

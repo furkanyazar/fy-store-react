@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Helmet titleTemplate="%s | FyStore" defaultTitle="FyStore" />
+      <Helmet titleTemplate="%s | FY Store" defaultTitle="FY Store" />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

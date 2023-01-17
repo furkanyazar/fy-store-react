@@ -21,6 +21,7 @@ const Header = () => {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   const categoryService = new CategoryService();
 
@@ -31,7 +32,7 @@ const Header = () => {
   }, [categoriesLoaded]);
 
   const fetchCategories = () => {
-    categoryService
+    return categoryService
       .getList()
       .then((response) => {
         if (response.data.success) {
@@ -48,30 +49,43 @@ const Header = () => {
       });
   };
 
-  const handleShowLoginModal = () => dispatch(setShowLoginModal(true));
-  const handleShowRegisterModal = () => dispatch(setShowRegisterModal(true));
+  const toggleExpanded = () => setExpanded(!expanded);
+
+  const handleShowLoginModal = () => {
+    dispatch(setShowLoginModal(true));
+    toggleExpanded();
+  };
+
+  const handleShowRegisterModal = () => {
+    dispatch(setShowRegisterModal(true));
+    toggleExpanded();
+  };
 
   return (
     <>
       <LoginModal />
       <RegisterModal />
 
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" sticky="top" onToggle={setExpanded} expanded={expanded}>
         <Container>
           <Link to={"/"}>
-            <Navbar.Brand>FY Store</Navbar.Brand>
+            <Navbar.Brand onClick={toggleExpanded}>FY Store</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Link to={"/"}>
-                <Nav.Link as={"div"}>Home</Nav.Link>
+                <Nav.Link as={"div"} onClick={toggleExpanded}>
+                  Home
+                </Nav.Link>
               </Link>
               <NavDropdown title="Categories" id="basic-nav-dropdown">
                 {categoriesLoaded ? (
                   categories.map((category) => (
                     <Link key={category.id} to={"/"}>
-                      <NavDropdown.Item as={"div"}>{category.name}</NavDropdown.Item>
+                      <NavDropdown.Item as={"div"} onClick={toggleExpanded}>
+                        {category.name}
+                      </NavDropdown.Item>
                     </Link>
                   ))
                 ) : (

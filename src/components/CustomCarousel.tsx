@@ -3,19 +3,24 @@ import { Carousel } from "react-bootstrap";
 
 import CustomCarouselItem from "../models/customCarouselItem";
 
-const CustomCarousel = ({ items }: Props) => {
+const CustomCarousel = ({ carouselItems }: Props) => {
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex: number) => setIndex(selectedIndex);
 
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
-      {items.map((item, index) => (
+      {carouselItems.map((carouselItem, index) => (
         <Carousel.Item key={index}>
-          <img className="d-block w-100" src={item.imgSrc} alt={item.imgAlt} />
+          <img className="d-block w-100" src={carouselItem.imgSrc} />
           <Carousel.Caption>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
+            <h3>{carouselItem.title}</h3>
+            <p>
+              {carouselItem.description.length > 70
+                ? carouselItem.description.substring(0, carouselItem.description.substring(0, 70).lastIndexOf(" ")) +
+                  "..."
+                : carouselItem.description}
+            </p>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
@@ -25,5 +30,5 @@ const CustomCarousel = ({ items }: Props) => {
 export default CustomCarousel;
 
 interface Props {
-  items: CustomCarouselItem[];
+  carouselItems: CustomCarouselItem[];
 }

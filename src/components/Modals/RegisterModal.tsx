@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, InputGroup, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -13,7 +13,7 @@ const RegisterModal = () => {
   const handleClose = () => dispatch(setShowRegisterModal(false));
 
   return (
-    <Modal show={showRegisterModal} onHide={handleClose}>
+    <Modal show={showRegisterModal} onHide={handleClose} scrollable>
       <Modal.Header closeButton>
         <Modal.Title>Register</Modal.Title>
       </Modal.Header>
