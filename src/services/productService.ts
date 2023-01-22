@@ -1,4 +1,5 @@
 import axios, { CancelTokenSource } from "axios";
+import DynamicQuery from "../models/dynamicQuery";
 
 class ProductService {
   private readonly apiUrl: string;
@@ -11,6 +12,12 @@ class ProductService {
 
   public getList = () => {
     return axios.get(this.apiUrl, {
+      cancelToken: this.cancelToken.token,
+    });
+  };
+
+  public getListByDynamic = (dynamic?: DynamicQuery) => {
+    return axios.post(this.apiUrl + "GetListByDynamic", dynamic, {
       cancelToken: this.cancelToken.token,
     });
   };

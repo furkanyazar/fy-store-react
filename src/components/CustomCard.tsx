@@ -8,8 +8,8 @@ const CustomCard = ({ title, description, imgSrc }: Props) => {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>
-          {description.length > 70
-            ? description.substring(0, description.substring(0, 70).lastIndexOf(" ")) + "..."
+          {description.length > 60
+            ? description.substring(0, description.substring(0, 60).lastIndexOf(" ")) + "..."
             : description}
         </Card.Text>
       </Card.Body>

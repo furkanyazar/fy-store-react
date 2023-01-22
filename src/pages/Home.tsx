@@ -29,70 +29,67 @@ const Home = () => {
   const featuredProductService = new FeaturedProductService();
 
   useEffect(() => {
+    return () => {
+      productService.cancelToken.cancel();
+      featuredProductService.cancelToken.cancel();
+    };
+  }, []);
+
+  useEffect(() => {
     if (!productsLoaded) {
-      fetchProducts();
+      fetchProducts()
+        .then((response) => {
+          if (response.data.success) {
+            setProducts(response.data.data);
+          }
+        })
+        .catch((errorResponse) => {
+          if (!axios.isCancel(errorResponse)) {
+            toast.error("Products" + CouldNotBeLoaded);
+          }
+        })
+        .finally(() => setProductsLoaded(true));
     }
   }, [productsLoaded]);
 
   useEffect(() => {
     if (!featuredProductsLoaded) {
-      fetchFeaturedProducts((featuredProducts: FeaturedProduct[]) => {
-        const items = featuredProducts
-          .sort((a, b) => b.productId - a.productId)
-          .map((featuredProduct) => {
-            return {
-              title: featuredProduct.name,
-              description: featuredProduct.description,
-              imgSrc: featuredProduct.imageUrl,
-            };
-          });
-          
-        setCarouselItems(items);
-      });
+      fetchFeaturedProducts()
+        .then((response) => {
+          if (response.data.success) {
+            const featuredProducts: FeaturedProduct[] = response.data.data;
+            const items = featuredProducts
+              .sort((a, b) => b.productId - a.productId)
+              .map((featuredProduct) => {
+                return {
+                  title: featuredProduct.name,
+                  description: featuredProduct.description,
+                  imgSrc: featuredProduct.imageUrl,
+                };
+              });
+            setCarouselItems(items);
+          }
+        })
+        .catch((errorResponse) => {
+          if (!axios.isCancel(errorResponse)) {
+            toast.error("Featured products" + CouldNotBeLoaded);
+          }
+        })
+        .finally(() => setFeaturedProductsLoaded(true));
     }
   }, [featuredProductsLoaded]);
 
   useEffect(() => {
     if (productsLoaded && featuredProductsLoaded) {
       setDataLoaded(true);
+    } else {
+      setDataLoaded(false);
     }
   }, [productsLoaded, featuredProductsLoaded]);
 
-  const fetchProducts = () => {
-    return productService
-      .getList()
-      .then((response) => {
-        if (response.data.success) {
-          setProducts(response.data.data);
-        }
-      })
-      .catch((errorResponse) => {
-        if (!axios.isCancel(errorResponse)) {
-          toast.error("Products" + CouldNotBeLoaded);
-        }
-      })
-      .finally(() => {
-        setProductsLoaded(true);
-      });
-  };
+  const fetchProducts = () => productService.getList();
 
-  const fetchFeaturedProducts = (_callback: Function) => {
-    return featuredProductService
-      .getList()
-      .then((response) => {
-        if (response.data.success) {
-          _callback(response.data.data);
-        }
-      })
-      .catch((errorResponse) => {
-        if (!axios.isCancel(errorResponse)) {
-          toast.error("Featured products" + CouldNotBeLoaded);
-        }
-      })
-      .finally(() => {
-        setFeaturedProductsLoaded(true);
-      });
-  };
+  const fetchFeaturedProducts = () => featuredProductService.getList();
 
   return (
     <>

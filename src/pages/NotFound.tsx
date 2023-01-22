@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 
 const NotFound = () => {
@@ -8,7 +9,9 @@ const NotFound = () => {
         <title>Not Found</title>
         <meta name="description" content="Not Found page." />
       </Helmet>
-      <p>Not found!</p>
+      <Container className="my-3">
+        <Row>Not found page.</Row>
+      </Container>
     </>
   );
 };
