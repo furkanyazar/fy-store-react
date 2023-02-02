@@ -99,7 +99,7 @@ const Home = () => {
       </Helmet>
       {dataLoaded ? (
         <>
-          <CustomCarousel carouselItems={carouselItems} />
+          {carouselItems.length > 0 && <CustomCarousel carouselItems={carouselItems} />}
           <Container className="my-5">
             <Row xs={1} md={2} lg={3} className="g-4">
               {products
